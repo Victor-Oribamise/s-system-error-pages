@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>S-System is being updated</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'><stop offset='0%25' stop-color='%234A56E2'/><stop offset='100%25' stop-color='%239F7AEA'/></linearGradient></defs><path d='M30,5 C20,5 15,12 15,18 C15,27 25,30 35,33 C45,36 55,40 55,50 C55,57 45,60 30,60 C20,60 10,55 5,48' stroke='url(%23g)' stroke-width='8' stroke-linecap='round' fill='none'/></svg>">
+<style>
+    /* Everything inline: this page has to load when other services are struggling. */
+    :root {
+        --indigo: #4A56E2;
+        --violet: #9F7AEA;
+        --ink: #1D2148;
+        --muted: #5A5F86;
+        --page: #EEF0FC;
+        --board: #20255C;
+        --flap: #2B3170;
+        --amber: #FFB938;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body {
+        background: var(--page);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 20px;
+        line-height: 1.55;
+    }
+    main { width: 100%; max-width: 600px; }
+    .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; color: var(--ink); text-decoration: none; }
+    .brand svg { width: 34px; height: 34px; }
+    .brand span { font-weight: 700; font-size: 1.05rem; letter-spacing: 0.01em; }
+
+    /* The departures board: the one bold element. */
+    .board {
+        background: var(--board);
+        border-radius: 10px;
+        padding: 18px 20px 20px;
+        box-shadow: 0 18px 40px -18px rgba(32, 37, 92, 0.55);
+        margin-bottom: 36px;
+    }
+    .board-head, .board-row { display: grid; grid-template-columns: max-content 1fr; gap: 28px; }
+    .board-head { color: #A9AEDB; font-size: 0.72rem; padding: 0 2px 10px; }
+    .cell { display: flex; gap: 3px; flex-wrap: nowrap; }
+    .flap {
+        font-family: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: #F4F5FF;
+        background: var(--flap);
+        border-radius: 3px;
+        width: 1.25em;
+        height: 1.6em;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0, 0, 0, 0.35); }
+    .status .flap { color: var(--amber); }
+    .flap.turn { animation: turn 0.42s ease-out both; }
+    @keyframes turn {
+        0% { transform: rotateX(90deg); opacity: 0.2; }
+        100% { transform: rotateX(0); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { .flap.turn { animation: none; } }
+
+    .name { white-space: nowrap; }
+    h1 { font-size: clamp(1.6rem, 4.4vw, 2.1rem); line-height: 1.2; margin: 0 0 12px; font-weight: 750; letter-spacing: -0.01em; }
+    p { margin: 0 0 14px; color: var(--muted); max-width: 34em; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 10px; }
+    .button {
+        appearance: none;
+        border: 0;
+        font: inherit;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+    .primary { background: linear-gradient(90deg, var(--indigo), var(--violet)); color: #fff; }
+    .primary:hover { filter: brightness(1.06); }
+    .secondary { background: #fff; color: var(--indigo); box-shadow: inset 0 0 0 1.5px #C9CDF4; }
+    .secondary:hover { box-shadow: inset 0 0 0 1.5px var(--indigo); }
+    .button:focus-visible, .brand:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+    .check { font-size: 0.9rem; color: var(--muted); min-height: 1.4em; }
+    footer { margin-top: 40px; font-size: 0.82rem; color: #8187B3; }
+    @media (max-width: 520px) {
+        .board-head, .board-row { grid-template-columns: 1fr; gap: 6px; }
+        .board-head { display: none; }
+        .flap { font-size: 0.95rem; }
+    }
+</style>
+</head>
+<body>
+<main>
+    <a class="brand" href="https://www.s-system.cloud" target="_top" aria-label="S-System home">
+        <svg viewBox="0 0 60 60" aria-hidden="true"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#4A56E2"/><stop offset="100%" stop-color="#9F7AEA"/></linearGradient></defs><path d="M30,5 C20,5 15,12 15,18 C15,27 25,30 35,33 C45,36 55,40 55,50 C55,57 45,60 30,60 C20,60 10,55 5,48" stroke="url(#g)" stroke-width="8" stroke-linecap="round" fill="none"/></svg>
+        <span>S-System</span>
+    </a>
+
+    <section class="board" aria-label="Status: maintenance">
+        <div class="board-head" aria-hidden="true"><span>Service</span><span>Status</span></div>
+        <div class="board-row" aria-hidden="true">
+            <div class="cell" data-text="S-SYSTEM"></div>
+            <div class="cell status" data-text="MAINTENANCE"></div>
+        </div>
+    </section>
+
+    <h1><span class="name">S-System</span> is being updated</h1>
+    <p>Scheduled maintenance is under way. Your data and settings are unaffected, and there is nothing you need to do.</p>
+    <p>This page checks every minute and takes you back as soon as the update is complete.</p>
+
+    <div class="actions">
+        <button class="button primary" type="button" id="retry">Check now</button>
+        <a class="button secondary" href="mailto:support@kquika.com?subject=S-System%20maintenance" target="_top">Email support</a>
+    </div>
+    <p class="check" id="check" aria-live="polite"></p>
+
+    <footer>Questions about the maintenance window: support@kquika.com. Kquika, Inc.</footer>
+</main>
+<script>
+    // This page can be shown inside a frame, so every action works on the whole
+    // window: reloading the frame would only reload this page.
+    function retry() {
+        try { window.top.location.reload(); } catch (e) { window.location.href = 'https://www.s-system.cloud'; }
+    }
+    document.getElementById('retry').addEventListener('click', retry);
+
+    // One flip as the page loads, character by character.
+    document.querySelectorAll('.cell').forEach(function (cell, c) {
+        cell.getAttribute('data-text').split('').forEach(function (ch, i) {
+            var flap = document.createElement('span');
+            flap.className = 'flap turn';
+            flap.textContent = ch === ' ' ? '\u00a0' : ch;
+            flap.style.animationDelay = (c * 120 + i * 45) + 'ms';
+            cell.appendChild(flap);
+        });
+    });
+
+    // Checks again every minute, counting down so the wait is visible.
+    var left = 60, check = document.getElementById('check');
+    setInterval(function () {
+        left -= 1;
+        if (left <= 0) { check.textContent = 'Checking now.'; retry(); return; }
+        check.textContent = 'Checking again in ' + left + ' seconds.';
+    }, 1000);
+</script>
+</body>
+</html>
